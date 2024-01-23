@@ -1,0 +1,23 @@
+{
+  "name": "object",
+  "version": "0.1.0",
+  "description": "discord bot",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ajoykumardas12/object.git"
+  },
+  "author": "ajoykumardas12",
+  "bugs": {
+    "url": "https://github.com/ajoykumardas12/object/issues"
+  },
+  "homepage": "https://github.com/ajoykumardas12/object#readme",
+  "dependencies": {
+    "discord.js": "^14.14.1",
+    "dotenv": "^16.3.2"
+  }
+}
