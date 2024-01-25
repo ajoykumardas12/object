@@ -1,5 +1,5 @@
 require("dotenv").config();
-const { Client, IntentsBitField } = require("discord.js");
+const { Client, IntentsBitField, EmbedBuilder } = require("discord.js");
 
 let botName = "";
 
@@ -11,6 +11,25 @@ const client = new Client({
     IntentsBitField.Flags.MessageContent,
   ],
 });
+
+const bioEmbed = new EmbedBuilder()
+  .setColor("Random")
+  .setTitle("Bio")
+  .setAuthor({ name: "Object" })
+  .setDescription("The mighty bot")
+  .setThumbnail("https://i.imgur.com/bn6Lvut.jpg")
+  .addFields(
+    {
+      name: "Who?",
+      value: "Bot, wannabe Assistant.",
+    },
+    {
+      name: "What?",
+      value: "Deep down I'm an Object, just like most things in JS.",
+    },
+    { name: "Do what?", value: "Reduce the gap between human and bot." }
+  )
+  .setImage("https://i.imgur.com/veT4S8V.jpg");
 
 client.on("ready", (c) => {
   console.log(`${c.user.username} is ready to Objectify 🐱‍💻`);
@@ -41,6 +60,10 @@ client.on("interactionCreate", (interaction) => {
     const num2 = Number(interaction.options.get("second-number")?.value);
 
     interaction.reply(`The sum is ${num1 + num2}`);
+  }
+
+  if (interaction.commandName === "bio") {
+    interaction.reply({ embeds: [bioEmbed] });
   }
 
   console.log(interaction.commandName);

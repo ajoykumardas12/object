@@ -46,6 +46,10 @@ const commands = [
       },
     ],
   },
+  {
+    name: "bio",
+    description: "Sends Object bio",
+  },
 ];
 
 const rest = new REST({ version: "10" }).setToken(process.env.LOGIN_TOKEN);
