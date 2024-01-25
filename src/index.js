@@ -24,4 +24,26 @@ client.on("messageCreate", (message) => {
   console.log(message.author);
 });
 
+client.on("interactionCreate", (interaction) => {
+  if (!interaction.isChatInputCommand()) return;
+
+  if (interaction.commandName === "hey") {
+    interaction.reply("hey");
+  }
+  if (interaction.commandName === "ping") {
+    interaction.reply("pong");
+  }
+  if (interaction.commandName === "pingpong") {
+    interaction.reply("https://media.giphy.com/media/s1oqCh5n0IwBa/giphy.gif");
+  }
+  if (interaction.commandName === "add") {
+    const num1 = Number(interaction.options.get("first-number")?.value);
+    const num2 = Number(interaction.options.get("second-number")?.value);
+
+    interaction.reply(`The sum is ${num1 + num2}`);
+  }
+
+  console.log(interaction.commandName);
+});
+
 client.login(process.env.LOGIN_TOKEN);
