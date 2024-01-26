@@ -1,5 +1,10 @@
 require("dotenv").config();
-const { Client, IntentsBitField, EmbedBuilder } = require("discord.js");
+const {
+  Client,
+  IntentsBitField,
+  EmbedBuilder,
+  ActivityType,
+} = require("discord.js");
 
 let botName = "";
 
@@ -43,30 +48,56 @@ client.on("messageCreate", (message) => {
   console.log(message.author);
 });
 
-client.on("interactionCreate", (interaction) => {
-  if (!interaction.isChatInputCommand()) return;
+// client.on("interactionCreate", (interaction) => {
+//   if (!interaction.isChatInputCommand()) return;
 
-  if (interaction.commandName === "hey") {
-    interaction.reply("hey");
-  }
-  if (interaction.commandName === "ping") {
-    interaction.reply("pong");
-  }
-  if (interaction.commandName === "pingpong") {
-    interaction.reply("https://media.giphy.com/media/s1oqCh5n0IwBa/giphy.gif");
-  }
-  if (interaction.commandName === "add") {
-    const num1 = Number(interaction.options.get("first-number")?.value);
-    const num2 = Number(interaction.options.get("second-number")?.value);
+//   if (interaction.commandName === "hey") {
+//     interaction.reply("hey");
+//   }
+//   if (interaction.commandName === "ping") {
+//     interaction.reply("pong");
+//   }
+//   if (interaction.commandName === "pingpong") {
+//     interaction.reply("https://media.giphy.com/media/s1oqCh5n0IwBa/giphy.gif");
+//   }
+//   if (interaction.commandName === "add") {
+//     const num1 = Number(interaction.options.get("first-number")?.value);
+//     const num2 = Number(interaction.options.get("second-number")?.value);
 
-    interaction.reply(`The sum is ${num1 + num2}`);
+//     interaction.reply(`The sum is ${num1 + num2}`);
+//   }
+
+//   if (interaction.commandName === "bio") {
+//     interaction.reply({ embeds: [bioEmbed] });
+//   }
+
+//   console.log(interaction.commandName);
+// });
+
+client.on("interactionCreate", async (interaction) => {
+  if (!interaction.isButton()) return;
+
+  await interaction.deferReply({ ephemeral: true });
+
+  const role = interaction.guild.roles.cache.get(interaction.customId);
+
+  if (!role) {
+    interaction.reply({
+      content: "I couldn't find that role",
+    });
+    return;
   }
 
-  if (interaction.commandName === "bio") {
-    interaction.reply({ embeds: [bioEmbed] });
+  const hasRole = interaction.member.roles.cache.has(role.id);
+
+  if (hasRole) {
+    await interaction.member.roles.remove(role);
+    await interaction.editReply(`The role ${role} has been removed.`);
+    return;
   }
 
-  console.log(interaction.commandName);
+  await interaction.member.roles.add(role);
+  await interaction.editReply(`The role ${role} has been been added.`);
 });
 
 client.login(process.env.LOGIN_TOKEN);
