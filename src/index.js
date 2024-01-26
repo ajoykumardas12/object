@@ -39,6 +39,12 @@ const bioEmbed = new EmbedBuilder()
 client.on("ready", (c) => {
   console.log(`${c.user.username} is ready to Objectify 🐱‍💻`);
   botName = c.user.username;
+
+  client.user.setActivity({
+    type: ActivityType.Custom,
+    name: "Objectfying",
+    // state: "💻",
+  });
 });
 
 client.on("messageCreate", (message) => {
