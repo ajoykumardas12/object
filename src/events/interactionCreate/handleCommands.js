@@ -6,10 +6,7 @@ module.exports = async (client, interaction) => {
 
   const localCommands = getLocalCommands();
 
-  console.log("abc");
-
   try {
-    console.log(`trying to run command`);
     const commandObject = localCommands.find(
       (cmd) => cmd.name === interaction.commandName
     );
@@ -61,8 +58,6 @@ module.exports = async (client, interaction) => {
         }
       }
     }
-
-    console.log("running command");
 
     await commandObject.callback(client, interaction);
   } catch (error) {
